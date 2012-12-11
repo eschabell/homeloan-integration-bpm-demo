@@ -1,0 +1,17 @@
+import org.drools.process.core.datatype.impl.type.StringDataType;
+[
+    [
+        "name" : "CreditReportNode",
+        "parameters" : [
+            "firstName" : new StringDataType(),
+            "lastName" : new StringDataType(),
+            "dob" : new StringDataType(),
+            "ssn" : new StringDataType()
+        ],
+        "results" : [
+            "creditScore" : new StringDataType()
+        ],
+        "displayName" : "Credit Report Node",
+  	    "icon" : "icons/java-icon.png"
+    ]
+]
