@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+
+    <servlet>
+        <display-name>The Credit Report Service servlet</display-name>
+        <servlet-name>creditreport</servlet-name>
+        <servlet-class>org.jbpm.servicestub.creditreport.CreditReportPortImpl</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>creditreport</servlet-name>
+        <url-pattern>/JBHomeLoans/CreditReport</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <display-name>The PreQualification Service servlet</display-name>
+        <servlet-name>prequalification</servlet-name>
+        <servlet-class>org.jbpm.servicestub.prequalification.PreQualDecisionServicePortImpl</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>prequalification</servlet-name>
+        <url-pattern>/homeloan-origination-esb/ebws/homeloan-origination-demo/PreQualDecisionService</url-pattern>
+    </servlet-mapping>
+
+</web-app>
