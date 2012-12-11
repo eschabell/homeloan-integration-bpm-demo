@@ -12,6 +12,7 @@ import org.drools.process.core.datatype.impl.type.StringDataType;
             "creditScore" : new StringDataType()
         ],
         "displayName" : "Credit Report Node",
-  	    "icon" : "icons/java-icon.png"
+  	    // "icon" : "icons/java-icon.png"
+  	    "icon" : "http://localhost:8080/jboss-brms/rest/packages/mortgages/assets/java-icon/binary"
     ]
 ]

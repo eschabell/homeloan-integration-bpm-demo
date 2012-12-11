@@ -14,6 +14,7 @@ import org.drools.process.core.datatype.impl.type.StringDataType;
             "insuranceCost" : new FloatDataType()
         ],
         "displayName" : "Prequalification Node",
-  	    "icon" : "icons/java-icon.png"
+        // "icon" : "icons/java-icon.png"
+        "icon" : "http://localhost:8080/jboss-brms/rest/packages/mortgages/assets/java-icon/binary"
     ]
 ]
