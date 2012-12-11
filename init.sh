@@ -1,4 +1,4 @@
-#!/bin/sh 
+#!/bin/bash 
 JBOSS_HOME=./target/jboss-soa-p-5
 SERVER_DIR=$JBOSS_HOME/jboss-as/server/default
 INBOUND_DIR=/tmp/inboundLoanApplications
@@ -82,15 +82,31 @@ else
 	unzip -q -d target $SRC_DIR/$SOA_P
 fi
 
-# Unzip the jboss-brms-manager.zip from JBoss BRMS Deployable
+# Unzip the required files from JBoss BRMS Deployable
 echo Unpacking JBoss Enterprise BRMS $VERSION...
 echo
-unzip -q $SRC_DIR/$BRMS jboss-brms-manager.zip 
 
+unzip -q $SRC_DIR/$BRMS jboss-brms-manager.zip 
 echo Deploying JBoss Enterprise BRMS Manager WAR...
 echo
 unzip -q -d $SERVER_DIR/deploy jboss-brms-manager.zip
 rm jboss-brms-manager.zip
+
+unzip -q $SRC_DIR/$BRMS jboss-jbpm-engine.zip 
+echo Copying jBPM client JARs...
+echo
+unzip -q -d $JBOSS_HOME/jboss-as/common jboss-jbpm-engine.zip lib/netty.jar
+rm jboss-jbpm-engine.zip
+
+unzip -q $SRC_DIR/$BRMS jboss-jbpm-console.zip 
+echo Deploying jBPM Console WARs...
+echo
+# For now don't add the 2 business central WARs, as they don't deploy well...
+unzip -q jboss-jbpm-console.zip designer.war/*
+mv designer.war $SERVER_DIR/deploy/designer.war
+unzip -q jboss-jbpm-console.zip jbpm-human-task.war/*
+mv jbpm-human-task.war $SERVER_DIR/deploy/jbpm-human-task.war
+rm jboss-jbpm-console.zip
 
 # Add execute permissions to the run.sh script
 echo "  - making sure run.sh for server is executable..."
