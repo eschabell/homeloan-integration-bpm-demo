@@ -3,16 +3,23 @@ package org.jbpm.homeloan;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.ws.BindingProvider;
+
 import org.drools.runtime.process.WorkItem;
 import org.drools.runtime.process.WorkItemHandler;
 import org.drools.runtime.process.WorkItemManager;
 import org.jbpm.homeloan.creditreport.CreditQuery;
 import org.jbpm.homeloan.creditreport.CreditReport;
+import org.jbpm.homeloan.creditreport.CreditReportPortType;
+import org.jbpm.homeloan.creditreport.CreditReportService;
 
 /**
  * WorkItem handler for retrieval of a credit report.
  */
 public class CreditReportNodeWorkItemHandler implements WorkItemHandler {
+    // TODO: this is the stub's endpoint!
+    private static final String ENDPOINT_ADDRESS = "http://localhost:8080/stub/JBHomeLoans/CreditReport";
+
     /** {@inheritDoc} */
     @Override
     public void executeWorkItem(final WorkItem item, final WorkItemManager itemMgr) {
@@ -30,11 +37,11 @@ public class CreditReportNodeWorkItemHandler implements WorkItemHandler {
         creditQuery.setSsn(ssn);
 
         // Call Web Service.
-        // TODO: for now, just fill in the result.
-        final CreditReport creditReport = new CreditReport();
-        creditReport.setScore(ssn.substring(0, 3));
+        final CreditReportPortType port = new CreditReportService().getCreditReportSoap();
+        ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, ENDPOINT_ADDRESS);
+        final CreditReport creditReport = port.creditReport(creditQuery);
 
-        // Signal that the work item is completed.
+        // Map from service output and signal that the work item is completed.
         final Map<String, Object> output = new HashMap<String, Object>();
         output.put("creditScore", creditReport.getScore());
         itemMgr.completeWorkItem(item.getId(), output);
