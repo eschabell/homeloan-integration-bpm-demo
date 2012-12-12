@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.jbpm.homeloan</groupId>
-    <artifactId>homeloan-integration</artifactId>
+    <artifactId>homeloan-integration-bpm</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>Homeloan BPM integration demo project</name>
 
@@ -23,12 +23,6 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.10</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.easymock</groupId>
-            <artifactId>easymock</artifactId>
-            <version>3.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -92,7 +86,6 @@
                             </bindingFiles>
                             <packageName>org.jbpm.homeloan.creditreport</packageName>
                             <sourceDestDir>${basedir}/target/generated-sources/jaxws</sourceDestDir>
-                            <verbose>true</verbose>
                         </configuration>
                     </execution>
                 </executions>
