@@ -17,8 +17,8 @@ import org.jbpm.homeloan.creditreport.CreditReportService;
  * WorkItem handler for retrieval of a credit report.
  */
 public class CreditReportNodeWorkItemHandler implements WorkItemHandler {
-    // TODO: this is the stub's endpoint!
-    private static final String ENDPOINT_ADDRESS = "http://localhost:8080/stub/JBHomeLoans/CreditReport";
+    // This is the service endpoint on the ESB.
+    private static final String ENDPOINT_ADDRESS = "http://localhost:8080/JBHomeLoans/CreditReport";
 
     /** {@inheritDoc} */
     @Override
