@@ -12,13 +12,14 @@ import org.jbpm.homeloan.creditreport.CreditQuery;
 import org.jbpm.homeloan.creditreport.CreditReport;
 import org.jbpm.homeloan.creditreport.CreditReportPortType;
 import org.jbpm.homeloan.creditreport.CreditReportService;
+import org.jbpm.homeloan.creditreport.ObjectFactory;
 
 /**
  * WorkItem handler for retrieval of a credit report.
  */
 public class CreditReportNodeWorkItemHandler implements WorkItemHandler {
     // This is the service endpoint on the ESB.
-    private static final String ENDPOINT_ADDRESS = "http://localhost:8080/JBHomeLoans/CreditReport";
+    static final String ENDPOINT_ADDRESS = "http://localhost:8080/JBHomeLoans/CreditReport";
 
     /** {@inheritDoc} */
     @Override
@@ -30,7 +31,7 @@ public class CreditReportNodeWorkItemHandler implements WorkItemHandler {
         final String ssn = (String) item.getParameter("ssn");
 
         // Map to service input.
-        final CreditQuery creditQuery = new CreditQuery();
+        final CreditQuery creditQuery = new ObjectFactory().createCreditQuery();
         creditQuery.setFirstName(firstName);
         creditQuery.setLastName(lastName);
         creditQuery.setDob(dob);
