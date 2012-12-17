@@ -12,7 +12,6 @@ import org.jbpm.homeloan.creditreport.CreditQuery;
 import org.jbpm.homeloan.creditreport.CreditReport;
 import org.jbpm.homeloan.creditreport.CreditReportPortType;
 import org.jbpm.homeloan.creditreport.CreditReportService;
-import org.jbpm.homeloan.creditreport.ObjectFactory;
 
 /**
  * WorkItem handler for retrieval of a credit report.
@@ -24,18 +23,8 @@ public class CreditReportNodeWorkItemHandler implements WorkItemHandler {
     /** {@inheritDoc} */
     @Override
     public void executeWorkItem(final WorkItem item, final WorkItemManager itemMgr) {
-        // Get input parameters.
-        final String firstName = (String) item.getParameter("firstName");
-        final String lastName = (String) item.getParameter("lastName");
-        final String dob = (String) item.getParameter("dob");
-        final String ssn = (String) item.getParameter("ssn");
-
-        // Map to service input.
-        final CreditQuery creditQuery = new ObjectFactory().createCreditQuery();
-        creditQuery.setFirstName(firstName);
-        creditQuery.setLastName(lastName);
-        creditQuery.setDob(dob);
-        creditQuery.setSsn(ssn);
+        // Get input parameter.
+        final CreditQuery creditQuery = (CreditQuery) item.getParameter("creditQuery");
 
         // Call Web Service.
         final CreditReportPortType port = new CreditReportService().getCreditReportSoap();

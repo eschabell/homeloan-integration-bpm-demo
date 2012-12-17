@@ -1,10 +1,18 @@
 package org.jbpm.homeloan;
 
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.xml.bind.DataBindingException;
+import javax.xml.bind.JAXB;
 
 import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.runtime.process.ProcessInstance;
+import org.jbpm.homeloan.prequalification.ApplicationType;
+import org.jbpm.homeloan.prequalification.ObjectFactory;
 import org.jbpm.test.JbpmJUnitTestCase;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +21,8 @@ import org.junit.Test;
  * This is a sample file to test a process.
  */
 public class ProcessTest extends JbpmJUnitTestCase {
+    private static final String TEST_APPLICATION = "/application.xml";
+
     private StatefulKnowledgeSession ksession;
 
     @Before
@@ -30,14 +40,24 @@ public class ProcessTest extends JbpmJUnitTestCase {
         }
 
         // Set up the knowledge session with the process.
-        ksession = createKnowledgeSession("homeloan.bpmn2");
+        ksession = createKnowledgeSession("HomeLoan.bpmn2");
         ksession.getWorkItemManager().registerWorkItemHandler("CreditReportNode", new CreditReportNodeWorkItemHandler());
         ksession.getWorkItemManager().registerWorkItemHandler("PrequalificationNode", new PrequalificationNodeWorkItemHandler());
     }
 
     @Test
     public void testProcess() {
-        final ProcessInstance processInstance = ksession.startProcess("mortgages.homeloan");
+        ApplicationType application = new ObjectFactory().createApplicationType();
+        try {
+            final InputStream is = ProcessTest.class.getResourceAsStream(TEST_APPLICATION);
+            application = JAXB.unmarshal(is, ApplicationType.class);
+        } catch (final DataBindingException dbEx) {
+            dbEx.printStackTrace();
+        }
+        final Map<String, Object> parms = new HashMap<String, Object>();
+        parms.put("application", application);
+
+        final ProcessInstance processInstance = ksession.startProcess("mortgages.HomeLoan", parms);
 
         // Check whether the process instance has completed successfully.
         assertProcessInstanceCompleted(processInstance.getId(), ksession);

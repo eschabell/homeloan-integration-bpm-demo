@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<definitions id="Definition"
+             targetNamespace="http://www.omg.org/bpmn20"
+             typeLanguage="http://www.java.com/javaTypes"
+             expressionLanguage="http://www.mvel.org/2.0"
+             xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd"
+             xmlns:g="http://www.jboss.org/drools/flow/gpd"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:tns="http://www.jboss.org/drools">
+
+  <itemDefinition id="_creditQueryItem" structureRef="org.jbpm.homeloan.creditreport.CreditQuery" />
+  <itemDefinition id="_prequalResponseItem" structureRef="org.jbpm.homeloan.prequalification.PreQualificationDecisionResponseType" />
+  <itemDefinition id="_creditScoreItem" structureRef="String" />
+  <itemDefinition id="_applicationItem" structureRef="org.jbpm.homeloan.prequalification.ApplicationType" />
+
+  <process processType="Private" isExecutable="true" id="mortgages.HomeLoan" name="HomeLoan" tns:packageName="mortgages" tns:version="1" >
+
+    <extensionElements>
+     <tns:import name="org.jbpm.homeloan.creditreport.CreditQuery" />
+    </extensionElements>
+    <!-- process variables -->
+    <property id="creditQuery" itemSubjectRef="_creditQueryItem"/>
+    <property id="prequalResponse" itemSubjectRef="_prequalResponseItem"/>
+    <property id="creditScore" itemSubjectRef="_creditScoreItem"/>
+    <property id="application" itemSubjectRef="_applicationItem"/>
+
+    <!-- nodes -->
+    <task id="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37" name="Credit Report Node" tns:taskName="CreditReportNode" >
+      <ioSpecification>
+        <dataInput id="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37_creditQueryInput" name="creditQuery" />
+        <dataInput id="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37_TaskNameInput" name="TaskName" />
+        <dataOutput id="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37_creditScoreOutput" name="creditScore" />
+        <inputSet>
+          <dataInputRefs>_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37_creditQueryInput</dataInputRefs>
+          <dataInputRefs>_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37_creditScoreOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <sourceRef>creditQuery</sourceRef>
+        <targetRef>_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37_creditQueryInput</targetRef>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">CreditReportNode</from>
+          <to xsi:type="tFormalExpression">_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37_creditScoreOutput</sourceRef>
+        <targetRef>creditScore</targetRef>
+      </dataOutputAssociation>
+    </task>
+    <startEvent id="_243AE622-3FCA-4A77-BA5D-05DF7CF309A6" name="" />
+    <task id="_A7CB39CB-0479-454A-921A-AE0F937CBCE0" name="Prequalification Node" tns:taskName="PrequalificationNode" >
+      <ioSpecification>
+        <dataInput id="_A7CB39CB-0479-454A-921A-AE0F937CBCE0_creditScoreInput" name="creditScore" />
+        <dataInput id="_A7CB39CB-0479-454A-921A-AE0F937CBCE0_applicationInput" name="application" />
+        <dataInput id="_A7CB39CB-0479-454A-921A-AE0F937CBCE0_TaskNameInput" name="TaskName" />
+        <dataOutput id="_A7CB39CB-0479-454A-921A-AE0F937CBCE0_prequalResponseOutput" name="prequalResponse" />
+        <inputSet>
+          <dataInputRefs>_A7CB39CB-0479-454A-921A-AE0F937CBCE0_creditScoreInput</dataInputRefs>
+          <dataInputRefs>_A7CB39CB-0479-454A-921A-AE0F937CBCE0_applicationInput</dataInputRefs>
+          <dataInputRefs>_A7CB39CB-0479-454A-921A-AE0F937CBCE0_TaskNameInput</dataInputRefs>
+        </inputSet>
+        <outputSet>
+          <dataOutputRefs>_A7CB39CB-0479-454A-921A-AE0F937CBCE0_prequalResponseOutput</dataOutputRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation>
+        <sourceRef>creditScore</sourceRef>
+        <targetRef>_A7CB39CB-0479-454A-921A-AE0F937CBCE0_creditScoreInput</targetRef>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <sourceRef>application</sourceRef>
+        <targetRef>_A7CB39CB-0479-454A-921A-AE0F937CBCE0_applicationInput</targetRef>
+      </dataInputAssociation>
+      <dataInputAssociation>
+        <targetRef>_A7CB39CB-0479-454A-921A-AE0F937CBCE0_TaskNameInput</targetRef>
+        <assignment>
+          <from xsi:type="tFormalExpression">PrequalificationNode</from>
+          <to xsi:type="tFormalExpression">_A7CB39CB-0479-454A-921A-AE0F937CBCE0_TaskNameInput</to>
+        </assignment>
+      </dataInputAssociation>
+      <dataOutputAssociation>
+        <sourceRef>_A7CB39CB-0479-454A-921A-AE0F937CBCE0_prequalResponseOutput</sourceRef>
+        <targetRef>prequalResponse</targetRef>
+      </dataOutputAssociation>
+    </task>
+    <exclusiveGateway id="_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C" name="" gatewayDirection="Diverging" />
+    <scriptTask id="_4FD76C22-B883-46F7-9733-A0C624A5EEF9" name="Communicate acceptance" scriptFormat="http://www.java.com/java" >
+      <script>System.out.println("Entering " + kcontext.getNodeInstance().getNodeName() +" Node");
+
+System.out.println("Application was approved with rate " + prequalResponse.getApprovedRate() + " and insurance cost " + prequalResponse.getInsuranceCost());
+
+System.out.println("Leaving " + kcontext.getNodeInstance().getNodeName() +" Node");
+</script>
+    </scriptTask>
+    <scriptTask id="_B3ABF310-3DA9-4132-B88C-B9EF80DC46D8" name="Communicate rejection" scriptFormat="http://www.java.com/java" >
+      <script>System.out.println("Entering " + kcontext.getNodeInstance().getNodeName() +" Node");
+
+System.out.println("Application was not approved, for reason: " + prequalResponse.getExplanation());
+
+System.out.println("Leaving " + kcontext.getNodeInstance().getNodeName() +" Node");
+</script>
+    </scriptTask>
+    <exclusiveGateway id="_AB8CF4CC-9888-4687-AD16-E4766A329CCA" name="" gatewayDirection="Converging" />
+    <endEvent id="_A4F6DAFE-EC3D-4ECA-BD14-210880458167" name="" />
+    <scriptTask id="_A710C291-4763-4167-AC67-09775C42E9D1" name="Read application" scriptFormat="http://www.java.com/java" >
+      <script>System.out.println("Entering " + kcontext.getNodeInstance().getNodeName() +" Node");
+
+if (creditQuery == null) {
+  System.out.println("There is no credit query object defined, adding default for demo purposes.");
+
+  // Define query object.
+  creditQuery = new CreditQuery();
+  creditQuery.setFirstName("John");
+  creditQuery.setLastName("Doe");
+  creditQuery.setDob("1970/01/01");
+  creditQuery.setSsn("789-456-123");
+  kcontext.setVariable("creditQuery", creditQuery);	
+}
+
+System.out.println("Leaving " + kcontext.getNodeInstance().getNodeName() +" Node");
+</script>
+    </scriptTask>
+
+    <!-- connections -->
+    <sequenceFlow id="_A710C291-4763-4167-AC67-09775C42E9D1-_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37" sourceRef="_A710C291-4763-4167-AC67-09775C42E9D1" targetRef="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37" />
+    <sequenceFlow id="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37-_A7CB39CB-0479-454A-921A-AE0F937CBCE0" sourceRef="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37" targetRef="_A7CB39CB-0479-454A-921A-AE0F937CBCE0" />
+    <sequenceFlow id="_A7CB39CB-0479-454A-921A-AE0F937CBCE0-_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C" sourceRef="_A7CB39CB-0479-454A-921A-AE0F937CBCE0" targetRef="_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C" />
+    <sequenceFlow id="_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C-_4FD76C22-B883-46F7-9733-A0C624A5EEF9" sourceRef="_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C" targetRef="_4FD76C22-B883-46F7-9733-A0C624A5EEF9" name="yes" tns:priority="1" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >System.out.println("Gateway: " + kcontext.getNodeInstance().getNodeName());
+
+return prequalResponse.isApproved();</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C-_B3ABF310-3DA9-4132-B88C-B9EF80DC46D8" sourceRef="_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C" targetRef="_B3ABF310-3DA9-4132-B88C-B9EF80DC46D8" name="no" tns:priority="2" >
+      <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >System.out.println("Gateway: " + kcontext.getNodeInstance().getNodeName());
+
+return !prequalResponse.isApproved();</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_4FD76C22-B883-46F7-9733-A0C624A5EEF9-_AB8CF4CC-9888-4687-AD16-E4766A329CCA" sourceRef="_4FD76C22-B883-46F7-9733-A0C624A5EEF9" targetRef="_AB8CF4CC-9888-4687-AD16-E4766A329CCA" />
+    <sequenceFlow id="_B3ABF310-3DA9-4132-B88C-B9EF80DC46D8-_AB8CF4CC-9888-4687-AD16-E4766A329CCA" sourceRef="_B3ABF310-3DA9-4132-B88C-B9EF80DC46D8" targetRef="_AB8CF4CC-9888-4687-AD16-E4766A329CCA" />
+    <sequenceFlow id="_AB8CF4CC-9888-4687-AD16-E4766A329CCA-_A4F6DAFE-EC3D-4ECA-BD14-210880458167" sourceRef="_AB8CF4CC-9888-4687-AD16-E4766A329CCA" targetRef="_A4F6DAFE-EC3D-4ECA-BD14-210880458167" />
+    <sequenceFlow id="_243AE622-3FCA-4A77-BA5D-05DF7CF309A6-_A710C291-4763-4167-AC67-09775C42E9D1" sourceRef="_243AE622-3FCA-4A77-BA5D-05DF7CF309A6" targetRef="_A710C291-4763-4167-AC67-09775C42E9D1" />
+
+  </process>
+
+  <bpmndi:BPMNDiagram>
+    <bpmndi:BPMNPlane bpmnElement="mortgages.HomeLoan" >
+      <bpmndi:BPMNShape bpmnElement="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37" >
+        <dc:Bounds x="299" y="106" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_243AE622-3FCA-4A77-BA5D-05DF7CF309A6" >
+        <dc:Bounds x="51" y="122" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_A7CB39CB-0479-454A-921A-AE0F937CBCE0" >
+        <dc:Bounds x="461" y="106" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C" >
+        <dc:Bounds x="592" y="122" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_4FD76C22-B883-46F7-9733-A0C624A5EEF9" >
+        <dc:Bounds x="671" y="33" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_B3ABF310-3DA9-4132-B88C-B9EF80DC46D8" >
+        <dc:Bounds x="671" y="171" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_AB8CF4CC-9888-4687-AD16-E4766A329CCA" >
+        <dc:Bounds x="837" y="122" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_A4F6DAFE-EC3D-4ECA-BD14-210880458167" >
+        <dc:Bounds x="933" y="121" width="48" height="48" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_A710C291-4763-4167-AC67-09775C42E9D1" >
+        <dc:Bounds x="135" y="106" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="_A710C291-4763-4167-AC67-09775C42E9D1-_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37" >
+        <di:waypoint x="185" y="146" />
+        <di:waypoint x="349" y="146" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37-_A7CB39CB-0479-454A-921A-AE0F937CBCE0" >
+        <di:waypoint x="349" y="146" />
+        <di:waypoint x="511" y="146" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_A7CB39CB-0479-454A-921A-AE0F937CBCE0-_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C" >
+        <di:waypoint x="511" y="146" />
+        <di:waypoint x="616" y="146" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C-_4FD76C22-B883-46F7-9733-A0C624A5EEF9" >
+        <di:waypoint x="616" y="146" />
+        <di:waypoint x="616" y="73" />
+        <di:waypoint x="721" y="73" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C-_B3ABF310-3DA9-4132-B88C-B9EF80DC46D8" >
+        <di:waypoint x="616" y="146" />
+        <di:waypoint x="616" y="211" />
+        <di:waypoint x="721" y="211" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_4FD76C22-B883-46F7-9733-A0C624A5EEF9-_AB8CF4CC-9888-4687-AD16-E4766A329CCA" >
+        <di:waypoint x="721" y="73" />
+        <di:waypoint x="861" y="73" />
+        <di:waypoint x="861" y="146" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_B3ABF310-3DA9-4132-B88C-B9EF80DC46D8-_AB8CF4CC-9888-4687-AD16-E4766A329CCA" >
+        <di:waypoint x="721" y="211" />
+        <di:waypoint x="861" y="211" />
+        <di:waypoint x="861" y="146" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_AB8CF4CC-9888-4687-AD16-E4766A329CCA-_A4F6DAFE-EC3D-4ECA-BD14-210880458167" >
+        <di:waypoint x="861" y="146" />
+        <di:waypoint x="957" y="145" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_243AE622-3FCA-4A77-BA5D-05DF7CF309A6-_A710C291-4763-4167-AC67-09775C42E9D1" >
+        <di:waypoint x="75" y="146" />
+        <di:waypoint x="185" y="146" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+
+</definitions>
