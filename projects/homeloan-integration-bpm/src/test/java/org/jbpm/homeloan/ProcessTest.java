@@ -41,7 +41,7 @@ public class ProcessTest extends JbpmJUnitTestCase {
 
         // Check whether the process instance has completed successfully.
         assertProcessInstanceCompleted(processInstance.getId(), ksession);
-        assertNodeTriggered(processInstance.getId(), "Read application", "Credit Report Node", "Prequalification Node", "Communicate approval");
+        assertNodeTriggered(processInstance.getId(), "Read application", "Credit Report Node", "Prequalification Node", "Communicate rejection");
     }
 
     private static boolean exists(final String wsdlLocation) throws Exception {
