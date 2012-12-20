@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project activeEnvironment="Default" name="homeloan-origination-esb" soapui-version="4.5.1" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="CreditReportSoap" type="wsdl" bindingName="{http://jboss.com/demo/products/soa-p/5.2/CreditReport.wsdl}CreditReportSoap" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/JBHomeLoans/CreditReport?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/JBHomeLoans/CreditReport?wsdl"><con:part><con:url>http://localhost:8080/JBHomeLoans/CreditReport?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="CreditReport" targetNamespace="http://jboss.com/demo/products/soa-p/5.2/CreditReport.wsdl" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://jboss.com/demo/products/soa-p/5.2/CreditReport.wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<con:soapui-project activeEnvironment="Default" name="homeloan-origination-esb" soapui-version="4.5.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="CreditReportSoap" type="wsdl" bindingName="{http://jboss.com/demo/products/soa-p/5.2/CreditReport.wsdl}CreditReportSoap" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/JBHomeLoans/CreditReport?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/JBHomeLoans/CreditReport?wsdl"><con:part><con:url>http://localhost:8080/JBHomeLoans/CreditReport?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="CreditReport" targetNamespace="http://jboss.com/demo/products/soa-p/5.2/CreditReport.wsdl" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://jboss.com/demo/products/soa-p/5.2/CreditReport.wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <xsd:schema elementFormDefault="qualified" targetNamespace="http://jboss.com/demo/products/soa-p/5.2/CreditReport.wsdl" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
       <xsd:element name="creditQuery">
@@ -1795,7 +1795,7 @@
       <xsd:fractionDigits value="2"/>
     </xsd:restriction>
   </xsd:simpleType>
-</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/homeloan-origination-esb/ebws/homeloan-origination-demo/PreQualDecisionService</con:endpoint></con:endpoints><con:operation isOneWay="false" action="http://soa.jboss.org/homeloan-origination-demo/PreQualDecisionServiceOp" name="PreQualDecisionServiceOp" bindingOperationName="PreQualDecisionServiceOp" type="Request-Response" outputName="PreQualDecisionServiceRes" inputName="PreQualDecisionServiceReq" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/homeloan-origination-esb/ebws/homeloan-origination-demo/PreQualDecisionService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/homeloan-origination-esb/ebws/homeloan-origination-demo/PreQualDecisionService</con:endpoint></con:endpoints><con:operation isOneWay="false" action="http://soa.jboss.org/homeloan-origination-demo/PreQualDecisionServiceOp" name="PreQualDecisionServiceOp" bindingOperationName="PreQualDecisionServiceOp" type="Request-Response" outputName="PreQualDecisionServiceRes" inputName="PreQualDecisionServiceReq" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Sample Request"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/homeloan-origination-esb/ebws/homeloan-origination-demo/PreQualDecisionService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
 xmlns:preq="http://jboss.com/demo/products/soa-p/5.2/PreQualificationDecisionRequest.xsd"
 xmlns:app="http://jboss.com/demo/products/soa-p/5.2/Application.xsd">
    <soapenv:Header/>
@@ -1918,6 +1918,39 @@ xmlns:app="http://jboss.com/demo/products/soa-p/5.2/Application.xsd">
 		</app:Borrowers>
 	</app:Application>
          <preq:CreditScore>720</preq:CreditScore>
+      </preq:PreQualificationDecisionRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soa.jboss.org/homeloan-origination-demo/PreQualDecisionServiceOp"/><con:wsrmConfig version="1.2"/></con:call><con:call name="Minimal Request"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/homeloan-origination-esb/ebws/homeloan-origination-demo/PreQualDecisionService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:preq="http://jboss.com/demo/products/soa-p/5.2/PreQualificationDecisionRequest.xsd" xmlns:app="http://jboss.com/demo/products/soa-p/5.2/Application.xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <preq:PreQualificationDecisionRequest>
+         <app:Application Application_ID="1" Date_Created="2012-12-18T09:00:00">
+            <app:Amount>50000</app:Amount>
+            <app:Interest_Rate>5.30</app:Interest_Rate>
+            <app:Number_Of_Months>36</app:Number_Of_Months>
+            <app:Borrowers>
+               <app:Borrower Borrower_Type="Borrower">
+                  <app:First_Name>John</app:First_Name>
+                  <app:Last_Name>Doe</app:Last_Name>
+                  <app:SSN>789-12-3456</app:SSN>
+                  <app:DOB>01/01/1999</app:DOB>
+                  <app:Employment_Information>
+                     <app:Employment Employment_Sequence="1">
+                        <app:Is_Self_Employed>false</app:Is_Self_Employed>
+                        <app:Monthly_Income>75000</app:Monthly_Income>
+                     </app:Employment>
+                  </app:Employment_Information>
+               </app:Borrower>
+               <app:Assets_Liabilities>
+                  <app:Cash_Deposits>
+                     <app:Cash_Deposit Cash_Deposit_Sequence="1">
+                        <app:Amount>10000</app:Amount>
+                     </app:Cash_Deposit>
+                  </app:Cash_Deposits>
+               </app:Assets_Liabilities>
+            </app:Borrowers>
+         </app:Application>
+         <preq:CreditScore>700</preq:CreditScore>
       </preq:PreQualificationDecisionRequest>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soa.jboss.org/homeloan-origination-demo/PreQualDecisionServiceOp"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/></con:soapui-project>
