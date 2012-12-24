@@ -136,6 +136,14 @@
             <version>1.6.4</version>
             <scope>test</scope>
         </dependency>
+        <!--  -->
+        <dependency>
+            <artifactId>org.jbpm.homeloan</artifactId>
+            <groupId>origination-esb-pojos</groupId>
+            <version>1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/POJO-model.jar</systemPath>
+        </dependency>
     </dependencies>
 
     <build>
@@ -161,6 +169,31 @@
                     <configuration>
                         <source>1.6</source>
                         <target>1.6</target>
+                    </configuration>
+                </plugin>
+                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself. -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.codehaus.mojo</groupId>
+                                        <artifactId>jaxws-maven-plugin</artifactId>
+                                        <versionRange>[1.10,)</versionRange>
+                                        <goals>
+                                            <goal>wsimport</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore></ignore>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
                     </configuration>
                 </plugin>
             </plugins>
