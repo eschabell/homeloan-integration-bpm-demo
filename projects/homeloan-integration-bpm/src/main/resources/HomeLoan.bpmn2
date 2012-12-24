@@ -12,30 +12,42 @@
              xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
              xmlns:tns="http://www.jboss.org/drools">
 
-  <itemDefinition id="_creditQueryItem" structureRef="org.jbpm.homeloan.creditreport.CreditQuery" />
-  <itemDefinition id="_prequalResponseItem" structureRef="org.jbpm.homeloan.prequalification.PreQualificationDecisionResponseType" />
-  <itemDefinition id="_creditScoreItem" structureRef="String" />
   <itemDefinition id="_applicationItem" structureRef="org.jbpm.homeloan.prequalification.ApplicationType" />
+  <itemDefinition id="_creditScoreItem" structureRef="String" />
+  <itemDefinition id="_applicantItem" structureRef="mortgages.Applicant" />
+  <itemDefinition id="_incomeSourceItem" structureRef="mortgages.IncomeSource" />
+  <itemDefinition id="_loanApplicationItem" structureRef="mortgages.LoanApplication" />
+  <itemDefinition id="_prequalResponseItem" structureRef="org.jbpm.homeloan.prequalification.PreQualificationDecisionResponseType" />
 
   <process processType="Private" isExecutable="true" id="mortgages.HomeLoan" name="HomeLoan" tns:packageName="mortgages" tns:version="1" >
 
     <extensionElements>
-     <tns:import name="org.jbpm.homeloan.creditreport.CreditQuery" />
+     <tns:import name="org.jbpm.homeloan.prequalification.ApplicationType" />
     </extensionElements>
     <!-- process variables -->
-    <property id="creditQuery" itemSubjectRef="_creditQueryItem"/>
-    <property id="prequalResponse" itemSubjectRef="_prequalResponseItem"/>
-    <property id="creditScore" itemSubjectRef="_creditScoreItem"/>
     <property id="application" itemSubjectRef="_applicationItem"/>
+    <property id="creditScore" itemSubjectRef="_creditScoreItem"/>
+    <property id="applicant" itemSubjectRef="_applicantItem"/>
+    <property id="incomeSource" itemSubjectRef="_incomeSourceItem"/>
+    <property id="loanApplication" itemSubjectRef="_loanApplicationItem"/>
+    <property id="prequalResponse" itemSubjectRef="_prequalResponseItem"/>
 
     <!-- nodes -->
     <task id="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37" name="Credit Report Node" tns:taskName="CreditReportNode" >
+      <extensionElements>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <script>System.out.println("Entering " + kcontext.getNodeInstance().getNodeName() +" Service Task");</script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <script>System.out.println("Leaving " + kcontext.getNodeInstance().getNodeName() +" Service Task");</script>
+        </tns:onExit-script>
+      </extensionElements>
       <ioSpecification>
-        <dataInput id="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37_creditQueryInput" name="creditQuery" />
+        <dataInput id="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37_applicationInput" name="application" />
         <dataInput id="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37_TaskNameInput" name="TaskName" />
         <dataOutput id="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37_creditScoreOutput" name="creditScore" />
         <inputSet>
-          <dataInputRefs>_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37_creditQueryInput</dataInputRefs>
+          <dataInputRefs>_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37_applicationInput</dataInputRefs>
           <dataInputRefs>_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37_TaskNameInput</dataInputRefs>
         </inputSet>
         <outputSet>
@@ -43,8 +55,8 @@
         </outputSet>
       </ioSpecification>
       <dataInputAssociation>
-        <sourceRef>creditQuery</sourceRef>
-        <targetRef>_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37_creditQueryInput</targetRef>
+        <sourceRef>application</sourceRef>
+        <targetRef>_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37_applicationInput</targetRef>
       </dataInputAssociation>
       <dataInputAssociation>
         <targetRef>_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37_TaskNameInput</targetRef>
@@ -59,42 +71,7 @@
       </dataOutputAssociation>
     </task>
     <startEvent id="_243AE622-3FCA-4A77-BA5D-05DF7CF309A6" name="" />
-    <task id="_A7CB39CB-0479-454A-921A-AE0F937CBCE0" name="Prequalification Node" tns:taskName="PrequalificationNode" >
-      <ioSpecification>
-        <dataInput id="_A7CB39CB-0479-454A-921A-AE0F937CBCE0_creditScoreInput" name="creditScore" />
-        <dataInput id="_A7CB39CB-0479-454A-921A-AE0F937CBCE0_applicationInput" name="application" />
-        <dataInput id="_A7CB39CB-0479-454A-921A-AE0F937CBCE0_TaskNameInput" name="TaskName" />
-        <dataOutput id="_A7CB39CB-0479-454A-921A-AE0F937CBCE0_prequalResponseOutput" name="prequalResponse" />
-        <inputSet>
-          <dataInputRefs>_A7CB39CB-0479-454A-921A-AE0F937CBCE0_creditScoreInput</dataInputRefs>
-          <dataInputRefs>_A7CB39CB-0479-454A-921A-AE0F937CBCE0_applicationInput</dataInputRefs>
-          <dataInputRefs>_A7CB39CB-0479-454A-921A-AE0F937CBCE0_TaskNameInput</dataInputRefs>
-        </inputSet>
-        <outputSet>
-          <dataOutputRefs>_A7CB39CB-0479-454A-921A-AE0F937CBCE0_prequalResponseOutput</dataOutputRefs>
-        </outputSet>
-      </ioSpecification>
-      <dataInputAssociation>
-        <sourceRef>creditScore</sourceRef>
-        <targetRef>_A7CB39CB-0479-454A-921A-AE0F937CBCE0_creditScoreInput</targetRef>
-      </dataInputAssociation>
-      <dataInputAssociation>
-        <sourceRef>application</sourceRef>
-        <targetRef>_A7CB39CB-0479-454A-921A-AE0F937CBCE0_applicationInput</targetRef>
-      </dataInputAssociation>
-      <dataInputAssociation>
-        <targetRef>_A7CB39CB-0479-454A-921A-AE0F937CBCE0_TaskNameInput</targetRef>
-        <assignment>
-          <from xsi:type="tFormalExpression">PrequalificationNode</from>
-          <to xsi:type="tFormalExpression">_A7CB39CB-0479-454A-921A-AE0F937CBCE0_TaskNameInput</to>
-        </assignment>
-      </dataInputAssociation>
-      <dataOutputAssociation>
-        <sourceRef>_A7CB39CB-0479-454A-921A-AE0F937CBCE0_prequalResponseOutput</sourceRef>
-        <targetRef>prequalResponse</targetRef>
-      </dataOutputAssociation>
-    </task>
-    <exclusiveGateway id="_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C" name="" gatewayDirection="Diverging" />
+    <exclusiveGateway id="_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C" name="Approved?" gatewayDirection="Diverging" />
     <scriptTask id="_4FD76C22-B883-46F7-9733-A0C624A5EEF9" name="Communicate acceptance" scriptFormat="http://www.java.com/java" >
       <script>System.out.println("Entering " + kcontext.getNodeInstance().getNodeName() +" Node");
 
@@ -116,26 +93,58 @@ System.out.println("Leaving " + kcontext.getNodeInstance().getNodeName() +" Node
     <scriptTask id="_A710C291-4763-4167-AC67-09775C42E9D1" name="Read application" scriptFormat="http://www.java.com/java" >
       <script>System.out.println("Entering " + kcontext.getNodeInstance().getNodeName() +" Node");
 
-if (creditQuery == null) {
-  System.out.println("There is no credit query object defined, adding default for demo purposes.");
+if (application == null) {
+  System.out.println("There is no application object defined, adding default for demo purposes.");
 
   // Define query object.
-  creditQuery = new CreditQuery();
-  creditQuery.setFirstName("John");
-  creditQuery.setLastName("Doe");
-  creditQuery.setDob("1970/01/01");
-  creditQuery.setSsn("789-456-123");
-  kcontext.setVariable("creditQuery", creditQuery);	
+  application = new ApplicationType();
+  kcontext.setVariable("application", application);	
 }
 
 System.out.println("Leaving " + kcontext.getNodeInstance().getNodeName() +" Node");
 </script>
     </scriptTask>
+    <businessRuleTask id="_10" name="Prequalification Rules" g:ruleFlowGroup="Prequalification" >
+    </businessRuleTask>
+    <scriptTask id="_11" name="Initialise rules input" scriptFormat="http://www.java.com/java" >
+      <script>System.out.println("Entering " + kcontext.getNodeInstance().getNodeName() +" Node.");
+
+// Create and fill the objects for the rules model.
+System.out.println("Converting variables for calling rules.");
+applicant = org.jbpm.homeloan.ModelConverter.getApplicant(application, creditScore);
+kcontext.setVariable("applicant", applicant);
+incomeSource = org.jbpm.homeloan.ModelConverter.getIncomeSource(application);
+kcontext.setVariable("incomeSource", incomeSource);
+loanApplication = org.jbpm.homeloan.ModelConverter.getLoanApplication(application);
+kcontext.setVariable("loanApplication", loanApplication);
+
+// Insert rules model objects into our session for the rules to use.
+insert(applicant);
+insert(incomeSource);
+insert(loanApplication);
+
+System.out.println("Leaving " + kcontext.getNodeInstance().getNodeName() +" Node.");
+
+System.out.println("Entering Prequalification Rules Node.");
+</script>
+    </scriptTask>
+    <scriptTask id="_12" name="Process rules output" scriptFormat="http://www.java.com/java" >
+      <script>System.out.println("Leaving Prequalification Rules Node.");
+
+System.out.println("Entering " + kcontext.getNodeInstance().getNodeName() +" Node.");
+
+// Create and fill the objects back to the process model.
+System.out.println("Converting variables after calling rules.");
+prequalResponse = org.jbpm.homeloan.ModelConverter.getPreQualificationDecisionResponse(loanApplication);
+kcontext.setVariable("prequalResponse", prequalResponse);
+
+System.out.println("Leaving " + kcontext.getNodeInstance().getNodeName() +" Node.");
+</script>
+    </scriptTask>
 
     <!-- connections -->
     <sequenceFlow id="_A710C291-4763-4167-AC67-09775C42E9D1-_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37" sourceRef="_A710C291-4763-4167-AC67-09775C42E9D1" targetRef="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37" />
-    <sequenceFlow id="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37-_A7CB39CB-0479-454A-921A-AE0F937CBCE0" sourceRef="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37" targetRef="_A7CB39CB-0479-454A-921A-AE0F937CBCE0" />
-    <sequenceFlow id="_A7CB39CB-0479-454A-921A-AE0F937CBCE0-_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C" sourceRef="_A7CB39CB-0479-454A-921A-AE0F937CBCE0" targetRef="_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C" />
+    <sequenceFlow id="_12-_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C" sourceRef="_12" targetRef="_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C" />
     <sequenceFlow id="_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C-_4FD76C22-B883-46F7-9733-A0C624A5EEF9" sourceRef="_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C" targetRef="_4FD76C22-B883-46F7-9733-A0C624A5EEF9" name="yes" tns:priority="1" >
       <conditionExpression xsi:type="tFormalExpression" language="http://www.java.com/java" >System.out.println("Gateway: " + kcontext.getNodeInstance().getNodeName());
 
@@ -150,6 +159,9 @@ return !prequalResponse.isApproved();</conditionExpression>
     <sequenceFlow id="_B3ABF310-3DA9-4132-B88C-B9EF80DC46D8-_AB8CF4CC-9888-4687-AD16-E4766A329CCA" sourceRef="_B3ABF310-3DA9-4132-B88C-B9EF80DC46D8" targetRef="_AB8CF4CC-9888-4687-AD16-E4766A329CCA" />
     <sequenceFlow id="_AB8CF4CC-9888-4687-AD16-E4766A329CCA-_A4F6DAFE-EC3D-4ECA-BD14-210880458167" sourceRef="_AB8CF4CC-9888-4687-AD16-E4766A329CCA" targetRef="_A4F6DAFE-EC3D-4ECA-BD14-210880458167" />
     <sequenceFlow id="_243AE622-3FCA-4A77-BA5D-05DF7CF309A6-_A710C291-4763-4167-AC67-09775C42E9D1" sourceRef="_243AE622-3FCA-4A77-BA5D-05DF7CF309A6" targetRef="_A710C291-4763-4167-AC67-09775C42E9D1" />
+    <sequenceFlow id="_11-_10" sourceRef="_11" targetRef="_10" />
+    <sequenceFlow id="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37-_11" sourceRef="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37" targetRef="_11" />
+    <sequenceFlow id="_10-_12" sourceRef="_10" targetRef="_12" />
 
   </process>
 
@@ -160,9 +172,6 @@ return !prequalResponse.isApproved();</conditionExpression>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_243AE622-3FCA-4A77-BA5D-05DF7CF309A6" >
         <dc:Bounds x="51" y="122" width="48" height="48" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_A7CB39CB-0479-454A-921A-AE0F937CBCE0" >
-        <dc:Bounds x="461" y="106" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C" >
         <dc:Bounds x="592" y="122" width="48" height="48" />
@@ -182,16 +191,21 @@ return !prequalResponse.isApproved();</conditionExpression>
       <bpmndi:BPMNShape bpmnElement="_A710C291-4763-4167-AC67-09775C42E9D1" >
         <dc:Bounds x="135" y="106" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_10" >
+        <dc:Bounds x="405" y="253" width="113" height="81" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_11" >
+        <dc:Bounds x="281" y="255" width="107" height="78" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_12" >
+        <dc:Bounds x="542" y="254" width="93" height="79" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="_A710C291-4763-4167-AC67-09775C42E9D1-_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37" >
         <di:waypoint x="185" y="146" />
         <di:waypoint x="349" y="146" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37-_A7CB39CB-0479-454A-921A-AE0F937CBCE0" >
-        <di:waypoint x="349" y="146" />
-        <di:waypoint x="511" y="146" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_A7CB39CB-0479-454A-921A-AE0F937CBCE0-_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C" >
-        <di:waypoint x="511" y="146" />
+      <bpmndi:BPMNEdge bpmnElement="_12-_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C" >
+        <di:waypoint x="588" y="293" />
         <di:waypoint x="616" y="146" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_8BBF70A7-DBB5-4657-A1B1-9A9C77582B3C-_4FD76C22-B883-46F7-9733-A0C624A5EEF9" >
@@ -221,6 +235,18 @@ return !prequalResponse.isApproved();</conditionExpression>
       <bpmndi:BPMNEdge bpmnElement="_243AE622-3FCA-4A77-BA5D-05DF7CF309A6-_A710C291-4763-4167-AC67-09775C42E9D1" >
         <di:waypoint x="75" y="146" />
         <di:waypoint x="185" y="146" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_11-_10" >
+        <di:waypoint x="334" y="294" />
+        <di:waypoint x="461" y="293" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37-_11" >
+        <di:waypoint x="349" y="146" />
+        <di:waypoint x="334" y="294" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_10-_12" >
+        <di:waypoint x="461" y="293" />
+        <di:waypoint x="588" y="293" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
