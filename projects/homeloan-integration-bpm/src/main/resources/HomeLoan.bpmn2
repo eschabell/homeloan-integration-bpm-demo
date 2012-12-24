@@ -22,7 +22,17 @@
   <process processType="Private" isExecutable="true" id="mortgages.HomeLoan" name="HomeLoan" tns:packageName="mortgages" tns:version="1" >
 
     <extensionElements>
+     <tns:import name="java.math.BigDecimal" />
+     <tns:import name="java.math.BigInteger" />
      <tns:import name="org.jbpm.homeloan.prequalification.ApplicationType" />
+     <tns:import name="org.jbpm.homeloan.prequalification.ApplicationType.Borrowers" />
+     <tns:import name="org.jbpm.homeloan.prequalification.AssetsLiabilitiesType" />
+     <tns:import name="org.jbpm.homeloan.prequalification.AssetsLiabilitiesType.CashDeposits" />
+     <tns:import name="org.jbpm.homeloan.prequalification.BorrowerType" />
+     <tns:import name="org.jbpm.homeloan.prequalification.BorrowerType.EmploymentInformation" />
+     <tns:import name="org.jbpm.homeloan.prequalification.CashDepositType" />
+     <tns:import name="org.jbpm.homeloan.prequalification.EmploymentType" />
+     <tns:import name="org.jbpm.homeloan.prequalification.ObjectFactory" />
     </extensionElements>
     <!-- process variables -->
     <property id="application" itemSubjectRef="_applicationItem"/>
@@ -97,7 +107,35 @@ if (application == null) {
   System.out.println("There is no application object defined, adding default for demo purposes.");
 
   // Define query object.
-  application = new ApplicationType();
+  application = new ObjectFactory().createApplicationType();
+  final Borrowers borrowers = new ObjectFactory().createApplicationTypeBorrowers();
+  application.setBorrowers(borrowers);
+  final BorrowerType borrower = new ObjectFactory().createBorrowerType();
+  borrowers.getBorrower().add(borrower);
+  borrower.setFirstName("John");
+  borrower.setLastName("Doe");
+  borrower.setDOB("01/01/1970");
+  borrower.setSSN("789-12-3456");
+
+  application.setAmount(BigDecimal.valueOf(150000));
+  application.setInterestRate(BigDecimal.valueOf(5.3));
+  application.setNumberOfMonths(BigInteger.valueOf(20 * 12));
+
+  final AssetsLiabilitiesType assetsLiabilities = new ObjectFactory().createAssetsLiabilitiesType();
+  borrowers.setAssetsLiabilities(assetsLiabilities);
+  final CashDeposits cashDeposits = new ObjectFactory().createAssetsLiabilitiesTypeCashDeposits();
+  assetsLiabilities.setCashDeposits(cashDeposits);
+  final CashDepositType cashDeposit = new ObjectFactory().createCashDepositType();
+  cashDeposits.getCashDeposit().add(cashDeposit);
+  cashDeposit.setAmount(BigDecimal.valueOf(1000));
+
+  final EmploymentInformation employmentInformation = new ObjectFactory().createBorrowerTypeEmploymentInformation();
+  borrower.setEmploymentInformation(employmentInformation);
+  final EmploymentType employment = new ObjectFactory().createEmploymentType();
+  employmentInformation.getEmployment().add(employment);
+  employment.setMonthlyIncome(BigDecimal.valueOf(5000));
+  employment.setIsSelfEmployed(Boolean.FALSE);
+
   kcontext.setVariable("application", application);	
 }
 

@@ -254,6 +254,22 @@ public class ProcessTest extends JbpmJUnitTestCase {
                 "Process rules output", "Communicate rejection");
     }
 
+    @Test
+    public void emptyRequest() {
+        final Map<String, Object> parms = new HashMap<String, Object>();
+
+        System.out.println("========================================================");
+        System.out.println("= Starting Process Approved (empty request) Test Case. =");
+        System.out.println("========================================================");
+        final ProcessInstance processInstance = ksession.startProcess("mortgages.HomeLoan", parms);
+        ksession.fireAllRules();
+
+        // Check whether the process instance has completed successfully.
+        assertProcessInstanceCompleted(processInstance.getId(), ksession);
+        assertNodeTriggered(processInstance.getId(), "Read application", "Credit Report Node", "Initialise rules input", "Prequalification Rules",
+                "Process rules output", "Communicate acceptance");
+    }
+
     /**
      * Check whether a given URL hosts a WSDL (or at least some other resource).
      * 
