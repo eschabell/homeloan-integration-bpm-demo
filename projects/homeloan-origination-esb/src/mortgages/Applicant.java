@@ -43,8 +43,6 @@ public class Applicant implements Serializable {
         // THE AGE VARIBALE WILL NOW CONTAIN THE CORRECT AGE
         // DERIVED FROMTHE GIVEN DOB
 
-        System.out.println("Getting age from applicant: DOB = " + getDob() + ", resulting age = " + age + " years.");
-
         return age;
     }
 
