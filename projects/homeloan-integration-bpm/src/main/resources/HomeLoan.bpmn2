@@ -106,35 +106,35 @@ System.out.println("Leaving " + kcontext.getNodeInstance().getNodeName() +" Node
 if (application == null) {
   System.out.println("There is no application object defined, adding default for demo purposes.");
 
-  // Define query object.
+  /* Define query object. */
   org.jbpm.homeloan.prequalification.ObjectFactory fact = new org.jbpm.homeloan.prequalification.ObjectFactory();
   application = fact.createApplicationType();
-  final Borrowers borrowers = fact.createApplicationTypeBorrowers();
+  final org.jbpm.homeloan.prequalification.ApplicationType.Borrowers borrowers = fact.createApplicationTypeBorrowers();
   application.setBorrowers(borrowers);
-  final BorrowerType borrower = fact.createBorrowerType();
+  final org.jbpm.homeloan.prequalification.BorrowerType borrower = fact.createBorrowerType();
   borrowers.getBorrower().add(borrower);
   borrower.setFirstName("John");
   borrower.setLastName("Doe");
   borrower.setDOB("01/01/1970");
   borrower.setSSN("789-12-3456");
 
-  application.setAmount(BigDecimal.valueOf(150000));
-  application.setInterestRate(BigDecimal.valueOf(5.3));
-  application.setNumberOfMonths(BigInteger.valueOf(20 * 12));
+  application.setAmount(java.math.BigDecimal.valueOf(150000));
+  application.setInterestRate(java.math.BigDecimal.valueOf(5.3));
+  application.setNumberOfMonths(java.math.BigInteger.valueOf(20 * 12));
 
-  final AssetsLiabilitiesType assetsLiabilities = fact.createAssetsLiabilitiesType();
+  final org.jbpm.homeloan.prequalification.AssetsLiabilitiesType assetsLiabilities = fact.createAssetsLiabilitiesType();
   borrowers.setAssetsLiabilities(assetsLiabilities);
-  final CashDeposits cashDeposits = fact.createAssetsLiabilitiesTypeCashDeposits();
+  final org.jbpm.homeloan.prequalification.AssetsLiabilitiesType.CashDeposits cashDeposits = fact.createAssetsLiabilitiesTypeCashDeposits();
   assetsLiabilities.setCashDeposits(cashDeposits);
-  final CashDepositType cashDeposit = fact.createCashDepositType();
+  final org.jbpm.homeloan.prequalification.CashDepositType cashDeposit = fact.createCashDepositType();
   cashDeposits.getCashDeposit().add(cashDeposit);
-  cashDeposit.setAmount(BigDecimal.valueOf(1000));
+  cashDeposit.setAmount(java.math.BigDecimal.valueOf(1000));
 
-  final EmploymentInformation employmentInformation = fact.createBorrowerTypeEmploymentInformation();
+  final org.jbpm.homeloan.prequalification.BorrowerType.EmploymentInformation employmentInformation = fact.createBorrowerTypeEmploymentInformation();
   borrower.setEmploymentInformation(employmentInformation);
-  final EmploymentType employment = fact.createEmploymentType();
+  final org.jbpm.homeloan.prequalification.EmploymentType employment = fact.createEmploymentType();
   employmentInformation.getEmployment().add(employment);
-  employment.setMonthlyIncome(BigDecimal.valueOf(5000));
+  employment.setMonthlyIncome(java.math.BigDecimal.valueOf(5000));
   employment.setIsSelfEmployed(Boolean.FALSE);
 
   kcontext.setVariable("application", application);	
