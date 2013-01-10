@@ -46,10 +46,10 @@
     <task id="_F9F435EB-D7FF-4B7D-A888-7C6AD0B78B37" name="Credit Report Node" tns:taskName="CreditReportNode" >
       <extensionElements>
         <tns:onEntry-script scriptFormat="http://www.java.com/java">
-          <script>System.out.println("Entering " + kcontext.getNodeInstance().getNodeName() +" Service Task");</script>
+          <tns:script>System.out.println("Entering " + kcontext.getNodeInstance().getNodeName() +" Service Task");</tns:script>
         </tns:onEntry-script>
         <tns:onExit-script scriptFormat="http://www.java.com/java">
-          <script>System.out.println("Leaving " + kcontext.getNodeInstance().getNodeName() +" Service Task");</script>
+          <tns:script>System.out.println("Leaving " + kcontext.getNodeInstance().getNodeName() +" Service Task");</tns:script>
         </tns:onExit-script>
       </extensionElements>
       <ioSpecification>
@@ -107,10 +107,11 @@ if (application == null) {
   System.out.println("There is no application object defined, adding default for demo purposes.");
 
   // Define query object.
-  application = new ObjectFactory().createApplicationType();
-  final Borrowers borrowers = new ObjectFactory().createApplicationTypeBorrowers();
+  org.jbpm.homeloan.prequalification.ObjectFactory fact = new org.jbpm.homeloan.prequalification.ObjectFactory();
+  application = fact.createApplicationType();
+  final Borrowers borrowers = fact.createApplicationTypeBorrowers();
   application.setBorrowers(borrowers);
-  final BorrowerType borrower = new ObjectFactory().createBorrowerType();
+  final BorrowerType borrower = fact.createBorrowerType();
   borrowers.getBorrower().add(borrower);
   borrower.setFirstName("John");
   borrower.setLastName("Doe");
@@ -121,17 +122,17 @@ if (application == null) {
   application.setInterestRate(BigDecimal.valueOf(5.3));
   application.setNumberOfMonths(BigInteger.valueOf(20 * 12));
 
-  final AssetsLiabilitiesType assetsLiabilities = new ObjectFactory().createAssetsLiabilitiesType();
+  final AssetsLiabilitiesType assetsLiabilities = fact.createAssetsLiabilitiesType();
   borrowers.setAssetsLiabilities(assetsLiabilities);
-  final CashDeposits cashDeposits = new ObjectFactory().createAssetsLiabilitiesTypeCashDeposits();
+  final CashDeposits cashDeposits = fact.createAssetsLiabilitiesTypeCashDeposits();
   assetsLiabilities.setCashDeposits(cashDeposits);
-  final CashDepositType cashDeposit = new ObjectFactory().createCashDepositType();
+  final CashDepositType cashDeposit = fact.createCashDepositType();
   cashDeposits.getCashDeposit().add(cashDeposit);
   cashDeposit.setAmount(BigDecimal.valueOf(1000));
 
-  final EmploymentInformation employmentInformation = new ObjectFactory().createBorrowerTypeEmploymentInformation();
+  final EmploymentInformation employmentInformation = fact.createBorrowerTypeEmploymentInformation();
   borrower.setEmploymentInformation(employmentInformation);
-  final EmploymentType employment = new ObjectFactory().createEmploymentType();
+  final EmploymentType employment = fact.createEmploymentType();
   employmentInformation.getEmployment().add(employment);
   employment.setMonthlyIncome(BigDecimal.valueOf(5000));
   employment.setIsSelfEmployed(Boolean.FALSE);
