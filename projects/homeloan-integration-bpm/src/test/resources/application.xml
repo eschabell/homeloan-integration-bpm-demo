@@ -3,9 +3,9 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jboss.com/demo/products/soa-p/5.2/Application.xsd Application.xsd ">
     <tns:Type>Conventional</tns:Type>
     <tns:Type_Description />
-    <tns:Amount>800000</tns:Amount>
+    <tns:Amount>150000</tns:Amount>
     <tns:Interest_Rate>3.75</tns:Interest_Rate>
-    <tns:Number_Of_Months>360</tns:Number_Of_Months>
+    <tns:Number_Of_Months>240</tns:Number_Of_Months>
     <tns:Amortization_Type>Fixed_Rate</tns:Amortization_Type>
     <tns:Property>
         <tns:Type>Primary_Residence</tns:Type>
@@ -26,7 +26,7 @@
             <tns:Title>Mr.</tns:Title>
             <tns:First_Name>Rocky</tns:First_Name>
             <tns:Last_Name>Miner</tns:Last_Name>
-            <tns:SSN>012121234</tns:SSN>
+            <tns:SSN>789-12-3456</tns:SSN>
             <tns:Phone>9783921000</tns:Phone>
             <tns:DOB>05/25/1965</tns:DOB>
             <tns:Years_School>16</tns:Years_School>
@@ -93,7 +93,7 @@
             <tns:Cash_Deposits>
                 <tns:Cash_Deposit Cash_Deposit_Sequence="1">
                     <tns:Description>My Real Estate Company</tns:Description>
-                    <tns:Amount>20000</tns:Amount>
+                    <tns:Amount>1000</tns:Amount>
                 </tns:Cash_Deposit>
             </tns:Cash_Deposits>
             <tns:Checking_Savings>
