@@ -31,7 +31,7 @@ import org.junit.Test;
  */
 public class ProcessTest extends JbpmJUnitTestCase {
     private static final boolean USE_RESOURCES_FROM_GUVNOR = false;
-    private static final String GUVNOR_URL = "http://localhost:8080/jboss-brms/org.drools.guvnor.Guvnor/";
+    private static final String GUVNOR_URL = "http://localhost:8080/jboss-brms";
     private static final String GUVNOR_USER_NAME = "admin";
     private static final String GUVNOR_PASSWORD = "admin";
     private static final String[] GUVNOR_PACKAGES = { "mortgages" };
