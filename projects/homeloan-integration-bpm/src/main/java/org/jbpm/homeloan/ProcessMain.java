@@ -1,5 +1,6 @@
 package org.jbpm.homeloan;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +31,7 @@ public class ProcessMain {
 
         // Read the input from the src/test/resources directory.
         final Map<String, Object> params = new HashMap<String, Object>();
-        final ApplicationType application = JAXB.unmarshal(ResourceFactory.newClassPathResource("application.xml").getReader(), ApplicationType.class);
+        final ApplicationType application = JAXB.unmarshal(new File("src/test/resources/application.xml"), ApplicationType.class);
         params.put("application", application);
 
         // Start a new process instance.
