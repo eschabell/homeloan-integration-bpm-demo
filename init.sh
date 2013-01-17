@@ -116,6 +116,10 @@ echo "  - adding BRMS policy in login-config.xml file..."
 echo
 cp support/login-config.xml $SERVER_DIR/conf
 
+echo "  - limiting verbose JackRabbit logging in jboss-log4j.xml file..."
+echo
+cp support/jboss-log4j.xml $SERVER_DIR/conf
+
 echo "  - enabling admin account in soa-users.properties file..."
 echo
 cp support/soa-users.properties $SERVER_DIR/conf/props
@@ -127,6 +131,13 @@ cp support/bpel.properties $SERVER_DIR/deploy/riftsaw.sar
 echo "  - copying custom RiftSaw event listener implementation jar to project..."
 echo 
 cp support/droolsfusion-eventlistener.jar $SERVER_DIR/deploy/riftsaw.sar/lib
+
+echo "  - copying model jars and configuration to Business Central server..."
+echo 
+cp support/homeloan-integration-bpm-model.jar $SERVER_DIR/deploy/business-central-server.war/WEB-INF/lib
+cp support/mortgages-model.jar $SERVER_DIR/deploy/business-central-server.war/WEB-INF/lib
+cp support/drools.session.conf $SERVER_DIR/deploy/business-central-server.war/WEB-INF/classes/META-INF
+cp support/CustomWorkItemHandlers.conf $SERVER_DIR/deploy/business-central-server.war/WEB-INF/classes/META-INF
 
 echo Integration $VERSION Home Loan Demo Setup Complete.
 echo
