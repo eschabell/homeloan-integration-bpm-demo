@@ -1,7 +1,7 @@
 Home Loan Integration Demo Quickstart Guide
 ===========================================
 
-Demo based on JBoss SOA-P and BRMS products.
+Demo based on JBoss SOA-P 5.x and BRMS 5.x products.
 
 Setup and Configuration
 -----------------------
